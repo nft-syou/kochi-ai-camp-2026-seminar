@@ -73,9 +73,9 @@ try {
 // ---------- 見張り ----------
 const sec = ((Date.now() - t0) / 1000).toFixed(1);
 const ok = result.errors.length === 0;
-const summary = `${ok ? "OK" : "NG"}  移動${result.moved}件 判定${result.classified}件 スキップ${result.skipped}件  ${sec}秒${ok ? "" : "  " + result.errors.join(" / ")}`;
+const summary = `${ok ? "OK" : "NG"}${APPLY ? "" : "(dry-run)"}  移動${result.moved}件 判定${result.classified}件 スキップ${result.skipped}件  ${sec}秒${ok ? "" : "  " + result.errors.join(" / ")}`;
 log(summary);                                       // ステップ1: 成功も0件も1行
-await notify(ok, summary);                          // ステップ2: 0件でも送る。失敗はメンション
+if (APPLY || !ok) await notify(ok, summary);        // ステップ2: 0件でも送る。失敗はメンション(dry-run は失敗時だけ)
 if (ok && APPLY) await heartbeat();                 // ステップ3: 成功したときだけ生存報告
 console.log(summary);
 process.exit(ok ? 0 : 1);
@@ -108,7 +108,9 @@ async function classify(path) {
 // ---------- 通知・ログ・生存報告 ----------
 function log(line) {
   mkdirSync(join(DEST, "logs"), { recursive: true });
-  appendFileSync(LOG, `${new Date().toISOString().replace("T", " ").slice(0, 16)}  ${line}\n`);
+  const now = new Date(); const ts = new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().replace("T", " ").slice(0, 16); // ローカル時刻
+  appendFileSync(LOG, `${ts}  ${line}
+`);
 }
 async function notify(ok, text) {
   const url = process.env.DISCORD_WEBHOOK;
