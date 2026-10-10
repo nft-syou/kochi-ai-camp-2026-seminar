@@ -229,7 +229,7 @@ syou
 
 # OpenAIもCloudflareも、同じ部品を出した！
 
-- 9月29日 OpenAI「Decisions API」。10月6日から誰でも使える
+- 9月29日 OpenAI「Decisions API」。もう誰でも使える
 - 10月1日 Cloudflare「Clef」。重みも公開、自分で動かせる
 - どれも文章は書かず、選択肢ごとの確率を返すだけ
 
