@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400">
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 Z" fill="#ffc999"/></marker></defs>
+<rect x="20" y="180" width="240" height="110" rx="16" fill="#1d1d25"/><text x="140.0" y="244.0" font-size="26" fill="#ffffff" text-anchor="middle" font-weight="bold" font-family="BIZ UDPGothic, Yu Gothic, sans-serif">自動化</text>
+<rect x="380" y="180" width="240" height="110" rx="16" fill="none" stroke="#5a5a66" stroke-width="3"/><text x="500.0" y="244.0" font-size="26" fill="#ffffff" text-anchor="middle" font-weight="bold" font-family="BIZ UDPGothic, Yu Gothic, sans-serif">ログ</text>
+<polyline points="270,235 368,235" fill="none" stroke="#ffc999" stroke-width="3" marker-end="url(#ar)"/><text x="319" y="222" font-size="23" fill="#a09aa4" text-anchor="middle" font-weight="normal" font-family="BIZ UDPGothic, Yu Gothic, sans-serif">毎回 1行</text>
+<rect x="740" y="180" width="240" height="110" rx="16" fill="none" stroke="#5a5a66" stroke-width="3"/><text x="860.0" y="244.0" font-size="26" fill="#ffffff" text-anchor="middle" font-weight="bold" font-family="BIZ UDPGothic, Yu Gothic, sans-serif">自分</text>
+<polyline points="140,300 140,360 860,360 860,302" fill="none" stroke="#ffc999" stroke-width="3" marker-end="url(#ar)"/><text x="500" y="350" font-size="23" fill="#a09aa4" text-anchor="middle" font-weight="normal" font-family="BIZ UDPGothic, Yu Gothic, sans-serif">完了通知(0件でも)</text>
+</svg>
