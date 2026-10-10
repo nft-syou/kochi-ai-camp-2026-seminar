@@ -43,7 +43,10 @@ img[alt~="center"] { display:block; margin:40px auto 44px; }
 .ill { position:absolute; right:118px; bottom:90px; width:290px; }
 /* 自己紹介: 右上にアイコン、右下に X の QR。本文は左 760px に収める */
 .avatar { position:absolute; right:118px; top:72px; width:265px; border-radius:32px; image-rendering:pixelated; }
-.qr { position:absolute; right:180px; bottom:64px; width:140px; border-radius:12px; }  /* アイコンと中心(x=1030)を揃える */
+.qr { position:absolute; right:180px; bottom:64px; width:140px; border-radius:12px; }
+/* 表紙: 公開リポジトリの PDF ダウンロード用 QR。帯の右端に置く */
+.qr-pdf { position:absolute; right:80px; bottom:54px; width:180px; border-radius:12px; z-index:2; }
+.qr-pdf-label { position:absolute; right:80px; bottom:22px; width:180px; text-align:center; font-size:14pt !important; color:#fff !important; font-weight:700; z-index:2; margin:0 !important; padding:0 !important; }  /* アイコンと中心(x=1030)を揃える */
 section.intro ul { max-width: 720px; }
 .handle { font-size:20pt; color:#a09aa4; font-weight:normal; margin-left:.6em; }
 .ill.tall { width:200px; bottom:80px; }
@@ -59,7 +62,10 @@ section.intro ul { max-width: 720px; }
 
 syou
 
-<!-- 高知AI活用キャンプ2026 午後の部。総理の話(場所×主体)の応用編。 -->
+<img src="./images/qr-pdf.png" class="qr-pdf">
+<div class="qr-pdf-label">スライド PDF</div>
+
+<!-- QR は公開リポジトリの deck.pdf(raw)への直リンク。高知AI活用キャンプ2026 午後の部。総理の話(場所×主体)の応用編。 -->
 
 ---
 
