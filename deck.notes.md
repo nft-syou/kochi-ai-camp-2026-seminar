@@ -49,7 +49,7 @@ LLMは読んで考えて書く「人」。JEVはプログラムに組み込む�
 総理が挙げた AI の弱点「遅い・コストがかかる・ブレる」のうち、遅い・高いを判定AIが埋める。料金は入力 $0.042/100万トークン・出力無料(生成AIの数十分の一)、速さは公称 70〜500ms。確からしさが数字で返るので、しきい値で振り分けられる。英語では probability(TypeSafe は calibrated probability と呼ぶ。confidence とは別物)。choice は probabilities(選択肢ごと)、score は score、yes/no は noul(= Yes の確率、0〜1。0.5 付近は「賭けを割っている」)。ポーカーの録画があれば10秒。要確認: 「自信が低いものだけ回す」が実態に合うか
 
 ## p17 OpenAIもCloudflareも、同じ部品を出した！
-JEV 公開(9/15)から2週間で大手2社が追随。「判定AI」が1製品ではなく種類になった、という話。OpenAI: GPT-6 Luna ベース、約10倍速(報道値 150ms)、料金未公開。Cloudflare Clef: 27B と Clef-flash 9B、Apache 2.0、Hugging Face に重みあり、画像も読める。Cloudflare 自身のベンチで中央値 Clef-flash 38.8ms / Clef 209ms。API の形は Jev と同じ(state + questions、yes/no・choice・score)で、エンドポイントとモデル名を替えれば載せ替えられる。料金は未確認($0.24/100万トークンという第三者掲載あり)。要確認: 合宿当日までの一般提供・料金
+JEV 公開(9/15)から2週間で大手2社が追随。「判定AI」が1製品ではなく種類になった、という話。OpenAI: GPT-6 Luna ベース、約10倍速(報道値 150ms)。10/6 に公開ベータ(API キーがあれば誰でも)。料金は入力 $0.10/100万トークン・出力無料(JEV の $0.042 の約2.4倍)。GA は「数週間以内」と言っているが日付なし。Cloudflare Clef: 27B と Clef-flash 9B、Apache 2.0、Hugging Face に重みあり、画像も読める。Cloudflare 自身のベンチで中央値 Clef-flash 38.8ms / Clef 209ms。API の形は Jev と同じ(state + questions、yes/no・choice・score)で、エンドポイントとモデル名を替えれば載せ替えられる。料金は未確認($0.24/100万トークンという第三者掲載あり)。要確認: 合宿当日までの一般提供・料金
 
 ## p18 で、さっきの例題だとどう分けるの？　［中扉］
 (メモなし)

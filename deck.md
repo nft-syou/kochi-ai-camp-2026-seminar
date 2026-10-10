@@ -229,11 +229,11 @@ syou
 
 # OpenAIもCloudflareも、同じ部品を出した！
 
-- 9月29日 OpenAI「Decisions API」。限定公開中
+- 9月29日 OpenAI「Decisions API」。10月6日から誰でも使える
 - 10月1日 Cloudflare「Clef」。重みも公開、自分で動かせる
 - どれも文章は書かず、選択肢ごとの確率を返すだけ
 
-<!-- JEV 公開(9/15)から2週間で大手2社が追随。「判定AI」が1製品ではなく種類になった、という話。OpenAI: GPT-6 Luna ベース、約10倍速(報道値 150ms)、料金未公開。Cloudflare Clef: 27B と Clef-flash 9B、Apache 2.0、Hugging Face に重みあり、画像も読める。Cloudflare 自身のベンチで中央値 Clef-flash 38.8ms / Clef 209ms。API の形は Jev と同じ(state + questions、yes/no・choice・score)で、エンドポイントとモデル名を替えれば載せ替えられる。料金は未確認($0.24/100万トークンという第三者掲載あり)。要確認: 合宿当日までの一般提供・料金 -->
+<!-- JEV 公開(9/15)から2週間で大手2社が追随。「判定AI」が1製品ではなく種類になった、という話。OpenAI: GPT-6 Luna ベース、約10倍速(報道値 150ms)。10/6 に公開ベータ(API キーがあれば誰でも)。料金は入力 $0.10/100万トークン・出力無料(JEV の $0.042 の約2.4倍)。GA は「数週間以内」と言っているが日付なし。Cloudflare Clef: 27B と Clef-flash 9B、Apache 2.0、Hugging Face に重みあり、画像も読める。Cloudflare 自身のベンチで中央値 Clef-flash 38.8ms / Clef 209ms。API の形は Jev と同じ(state + questions、yes/no・choice・score)で、エンドポイントとモデル名を替えれば載せ替えられる。料金は未確認($0.24/100万トークンという第三者掲載あり)。要確認: 合宿当日までの一般提供・料金 -->
 
 ---
 
