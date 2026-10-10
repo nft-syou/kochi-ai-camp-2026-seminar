@@ -31,3 +31,7 @@ pip3 install pillow                # 検査ツール用(任意)
   - `tools/check-figure-text.py` は Windows で動くよう subprocess の文字コード指定を2行追加している(コメントで明記)
 - `images/ill-*.png` は fal.ai(nano-banana-pro)で生成。`images/watch-*.svg` は `images/make-watch.py` で生成
 - スライド本文・トークメモ: © syou
+
+## 例題の実装例
+
+- [`examples/folder-sort/`](examples/folder-sort/): 例題② ダウンロードフォルダ整理(Node)。設計図・AGENTS.md・見張りまで一式

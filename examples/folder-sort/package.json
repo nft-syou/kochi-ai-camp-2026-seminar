@@ -1,0 +1,10 @@
+{
+  "name": "folder-sort",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dry": "node sort.mjs",
+    "sort": "node sort.mjs --apply"
+  }
+}
