@@ -109,8 +109,7 @@ async function classify(path) {
 function log(line) {
   mkdirSync(join(DEST, "logs"), { recursive: true });
   const now = new Date(); const ts = new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().replace("T", " ").slice(0, 16); // ローカル時刻
-  appendFileSync(LOG, `${ts}  ${line}
-`);
+  appendFileSync(LOG, `${ts}  ${line}\n`);
 }
 async function notify(ok, text) {
   const url = process.env.DISCORD_WEBHOOK;
