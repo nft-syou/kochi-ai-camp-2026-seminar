@@ -2,6 +2,7 @@
 
 2026-10-10 の合宿で話した、壊れない自動化の設計メモ(どこで動かす / 誰がやる / どう見張る / どう引き継ぐ)。Marp 製。
 
+- ブラウザで読む: https://nft-syou.github.io/kochi-ai-camp-2026-seminar/
 - スライド PDF: [`deck.pdf`](deck.pdf)
 - トークメモ: [`deck.notes.md`](deck.notes.md)
 
