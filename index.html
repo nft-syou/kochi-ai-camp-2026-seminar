@@ -29,154 +29,230 @@
     -webkit-font-smoothing: antialiased;
   }
   a { color: var(--accent); }
-  header {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 16px 20px;
-  }
-  .eyebrow {
-    color: var(--band);
-    font-size: 14px;
-    letter-spacing: .08em;
-    margin: 0 0 6px;
-  }
-  h1 {
-    font-size: clamp(26px, 5vw, 42px);
-    margin: 0 0 8px;
-    color: var(--accent);
-    line-height: 1.3;
-  }
-  .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; margin: 0 0 14px; }
+  h1 { font-size: clamp(20px, 3.4vw, 30px); margin: 0; color: var(--accent); line-height: 1.3; }
+  .sub { color: var(--muted); margin: 0; font-size: 14px; }
   .sub a { color: var(--muted); }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 8px; }
-  .btn {
-    display: inline-block;
-    padding: 10px 18px;
-    border-radius: 8px;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: var(--text);
-    text-decoration: none;
-    font-size: 15px;
-  }
-  .btn.primary { background: var(--band); border-color: var(--band); color: #111; font-weight: 700; }
-  .btn:hover { border-color: var(--accent); }
-  .btn.primary:hover { background: var(--accent); }
-  .status { color: var(--muted); font-size: 13px; min-height: 1.6em; }
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 16px 60px;
-  }
-  .page {
+
+  /* ---- viewer ---- */
+  .viewer {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: var(--panel);
+    background: #000;
     border: 1px solid var(--line);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
+    user-select: none;
+    touch-action: pan-y;
   }
-  .page canvas { display: block; width: 100%; height: 100%; }
-  .slide { margin: 0 0 14px; }
-  .slide .num {
-    text-align: right;
-    font-size: 12px;
-    color: var(--muted);
-    margin: 4px 2px 0;
+  .viewer canvas { display: block; width: 100%; height: 100%; }
+  .viewer:fullscreen { border: 0; border-radius: 0; }
+  .viewer:fullscreen canvas { width: 100%; height: 100%; object-fit: contain; }
+  .nav {
+    position: absolute; top: 0; bottom: 0; width: 18%;
+    display: flex; align-items: center; cursor: pointer;
+    opacity: 0; transition: opacity .15s;
   }
-  .fallback {
-    padding: 24px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: var(--panel);
+  .nav.prev { left: 0; justify-content: flex-start; }
+  .nav.next { right: 0; justify-content: flex-end; }
+  .viewer:hover .nav, .viewer.touch .nav { opacity: 1; }
+  .nav span {
+    margin: 0 12px; width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,.55); color: #fff; font-size: 24px; line-height: 44px; text-align: center;
   }
-  footer {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 16px 60px;
-    color: var(--muted);
-    font-size: 13px;
+  .nav.disabled { visibility: hidden; }
+  .bar {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; gap: 12px;
+    padding: 6px 12px;
+    background: linear-gradient(transparent, rgba(0,0,0,.75));
+    font-size: 13px; color: #fff;
+    opacity: 0; transition: opacity .15s;
   }
+  .viewer:hover .bar, .viewer.touch .bar { opacity: 1; }
+  .bar .count { font-variant-numeric: tabular-nums; }
+  .bar .spacer { flex: 1; }
+  .bar button {
+    background: none; border: 0; color: #fff; cursor: pointer; font-size: 13px; padding: 4px 6px; border-radius: 4px;
+  }
+  .bar button:hover { background: rgba(255,255,255,.15); }
+  .progress { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--band); width: 0; transition: width .2s; }
+
+  /* ---- under the viewer ---- */
+  .under { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0 0; }
+  .hint { color: var(--muted); font-size: 13px; }
+  .btn {
+    display: inline-block; padding: 9px 16px; border-radius: 8px;
+    background: var(--band); color: #111; font-weight: 700; font-size: 14px; text-decoration: none;
+  }
+  .btn:hover { background: var(--accent); }
+
+  /* ---- thumbnails ---- */
+  .thumbs {
+    display: flex; gap: 8px; overflow-x: auto; padding: 14px 2px 10px; margin: 8px 0 0;
+    scroll-snap-type: x proximity; scrollbar-width: thin;
+  }
+  .thumb {
+    flex: 0 0 auto; width: 160px; aspect-ratio: 16 / 9;
+    background: var(--panel); border: 2px solid transparent; border-radius: 4px; overflow: hidden;
+    cursor: pointer; position: relative; scroll-snap-align: start;
+  }
+  .thumb canvas { display: block; width: 100%; height: 100%; }
+  .thumb.current { border-color: var(--accent); }
+  .thumb .n { position: absolute; left: 4px; bottom: 2px; font-size: 11px; color: #fff; text-shadow: 0 0 3px #000; }
+  @media (max-width: 600px) {
+    .thumb { width: 112px; }
+    .nav { display: none; }       /* 狭い画面はスワイプとタップで送る */
+    .hint-wide { display: none; }
+  }
+  @media (min-width: 601px) { .hint-narrow { display: none; } }
+
+  footer { color: var(--muted); font-size: 12px; margin: 28px 0 0; }
   footer p { margin: 4px 0; }
+  .fallback { padding: 24px; }
 </style>
 </head>
 <body>
-<header>
-  <p class="eyebrow">高知AI活用キャンプ 2026 ／ 2026-10-10</p>
-  <h1>作る前に、4つだけ決める。</h1>
-  <p class="sub">壊れない自動化を作る前に決める4つのこと ── どこで動かす？ 誰がやる？ どう見張る？ どう引き継ぐ？<br>
-    話した人: syou(<a href="https://x.com/nft_syou">@nft_syou</a>)</p>
-  <div class="actions">
-    <a class="btn primary" href="deck.pdf" download>PDF をダウンロード</a>
-    <a class="btn" href="deck-notes.pdf">トークメモ付き PDF</a>
-    <a class="btn" href="https://github.com/nft-syou/kochi-ai-camp-2026-seminar/tree/main/examples/folder-sort">例題の実装例</a>
-    <a class="btn" href="https://github.com/nft-syou/kochi-ai-camp-2026-seminar">GitHub</a>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>作る前に、4つだけ決める。</h1>
+      <p class="sub">高知AI活用キャンプ 2026(2026-10-10)／ syou(<a href="https://x.com/nft_syou">@nft_syou</a>)</p>
+    </div>
+    <a class="btn" href="deck.pdf" download>PDF をダウンロード</a>
+  </header>
+
+  <div class="viewer" id="viewer" tabindex="0" aria-label="スライド">
+    <canvas id="main"></canvas>
+    <div class="nav prev" id="prev"><span>&#8249;</span></div>
+    <div class="nav next" id="next"><span>&#8250;</span></div>
+    <div class="bar">
+      <span class="count" id="count">読み込み中…</span>
+      <span class="spacer"></span>
+      <button id="fs" type="button">全画面</button>
+    </div>
+    <div class="progress" id="progress"></div>
   </div>
-  <p class="status" id="status">スライドを読み込んでいます…</p>
-</header>
 
-<main id="pages"></main>
+  <div class="under">
+    <span class="hint hint-wide">← → キー、クリック、スワイプでページ送り</span>
+    <span class="hint hint-narrow">スワイプ、またはタップでページ送り(右側で次へ、左側で前へ)</span>
+  </div>
 
-<footer>
-  <p>スライド本文・トークメモ © syou。テーマと検査ツールは <a href="https://github.com/minorun365/minorun-marp-skill">minorun-marp-skill</a>(Apache License 2.0)。</p>
-  <p>表示がうまくいかないときは <a href="deck.pdf">deck.pdf</a> を直接開いてください。</p>
-</footer>
+  <div class="thumbs" id="thumbs"></div>
+
+  <footer>
+    <p>スライド本文 © syou。テーマは <a href="https://github.com/minorun365/minorun-marp-skill">minorun-marp-skill</a>(Apache License 2.0)。ソース: <a href="https://github.com/nft-syou/kochi-ai-camp-2026-seminar">GitHub</a></p>
+  </footer>
+</div>
 
 <script type="module">
   const PDF_URL = "deck.pdf";
-  const status = document.getElementById("status");
-  const root = document.getElementById("pages");
-
-  function showFallback(msg) {
-    status.textContent = "";
-    root.innerHTML = `<div class="fallback">${msg} <a href="${PDF_URL}">deck.pdf を開く</a></div>`;
-  }
+  const viewer = document.getElementById("viewer");
+  const main = document.getElementById("main");
+  const count = document.getElementById("count");
+  const progress = document.getElementById("progress");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const thumbs = document.getElementById("thumbs");
 
   try {
     const pdfjs = await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs");
     pdfjs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
-
     const pdf = await pdfjs.getDocument(PDF_URL).promise;
     const total = pdf.numPages;
-    status.textContent = `全 ${total} 枚。スクロールで読めます。`;
+    const pages = new Map();
+    const getPage = (n) => pages.get(n) ?? (pages.set(n, pdf.getPage(n)), pages.get(n));
 
-    // 枠だけ先に並べ、画面に入ったページから描く
-    const holders = [];
-    for (let i = 1; i <= total; i++) {
-      const wrap = document.createElement("div");
-      wrap.className = "slide";
-      wrap.innerHTML = `<div class="page" data-page="${i}"><canvas></canvas></div><div class="num">${i} / ${total}</div>`;
-      root.appendChild(wrap);
-      holders.push(wrap.querySelector(".page"));
-    }
-
-    const rendered = new Set();
-    async function render(div) {
-      const n = Number(div.dataset.page);
-      if (rendered.has(n)) return;
-      rendered.add(n);
-      const page = await pdf.getPage(n);
+    // ---- メイン表示 ----
+    let current = Math.min(Math.max(Number(location.hash.slice(1)) || 1, 1), total);
+    let drawing = 0;
+    async function draw(n) {
+      const id = ++drawing;
+      const page = await getPage(n);
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const cssWidth = div.clientWidth;
+      const box = viewer.getBoundingClientRect();
       const base = page.getViewport({ scale: 1 });
-      const scale = (cssWidth * dpr) / base.width;
-      const viewport = page.getViewport({ scale });
-      const canvas = div.querySelector("canvas");
-      canvas.width = Math.floor(viewport.width);
-      canvas.height = Math.floor(viewport.height);
-      await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+      const scale = Math.min(box.width / base.width, box.height / base.height) * dpr;
+      const vp = page.getViewport({ scale });
+      const off = document.createElement("canvas");
+      off.width = Math.floor(vp.width); off.height = Math.floor(vp.height);
+      await page.render({ canvasContext: off.getContext("2d"), viewport: vp }).promise;
+      if (id !== drawing) return; // もっと新しい描画が走っている
+      main.width = off.width; main.height = off.height;
+      main.getContext("2d").drawImage(off, 0, 0);
     }
+    function show(n, pushHash = true) {
+      current = Math.min(Math.max(n, 1), total);
+      draw(current);
+      count.textContent = `${current} / ${total}`;
+      progress.style.width = `${(current / total) * 100}%`;
+      prevBtn.classList.toggle("disabled", current === 1);
+      nextBtn.classList.toggle("disabled", current === total);
+      if (pushHash) history.replaceState(null, "", current === 1 ? location.pathname : `#${current}`);
+      for (const t of thumbs.children) t.classList.toggle("current", Number(t.dataset.page) === current);
+      thumbs.children[current - 1]?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      if (current < total) getPage(current + 1); // 次を先読み
+    }
+    const next = () => show(current + 1);
+    const prev = () => show(current - 1);
 
-    const io = new IntersectionObserver((entries) => {
+    prevBtn.addEventListener("click", (e) => { e.stopPropagation(); prev(); });
+    nextBtn.addEventListener("click", (e) => { e.stopPropagation(); next(); });
+    main.addEventListener("click", (e) => { (e.clientX - main.getBoundingClientRect().left) < main.clientWidth / 3 ? prev() : next(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT") return;
+      if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); next(); }
+      else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === "Home") show(1);
+      else if (e.key === "End") show(total);
+      else if (e.key === "f") toggleFs();
+    });
+    // スワイプ
+    let sx = null, sy = null;
+    viewer.addEventListener("touchstart", (e) => { viewer.classList.add("touch"); sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    viewer.addEventListener("touchend", (e) => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) dx < 0 ? next() : prev();
+      sx = sy = null;
+    }, { passive: true });
+    // 全画面
+    function toggleFs() { document.fullscreenElement ? document.exitFullscreen() : viewer.requestFullscreen?.(); }
+    document.getElementById("fs").addEventListener("click", (e) => { e.stopPropagation(); toggleFs(); });
+    document.addEventListener("fullscreenchange", () => draw(current));
+    let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => draw(current), 150); });
+    window.addEventListener("hashchange", () => { const n = Number(location.hash.slice(1)); if (n && n !== current) show(n, false); });
+
+    // ---- サムネイル(見えたものから描く) ----
+    for (let i = 1; i <= total; i++) {
+      const t = document.createElement("div");
+      t.className = "thumb"; t.dataset.page = i;
+      t.innerHTML = `<canvas></canvas><span class="n">${i}</span>`;
+      t.addEventListener("click", () => show(i));
+      thumbs.appendChild(t);
+    }
+    const io = new IntersectionObserver(async (entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) { render(e.target); io.unobserve(e.target); }
+        if (!e.isIntersecting) continue;
+        io.unobserve(e.target);
+        const page = await getPage(Number(e.target.dataset.page));
+        const c = e.target.querySelector("canvas");
+        const vp = page.getViewport({ scale: 320 / page.getViewport({ scale: 1 }).width });
+        c.width = Math.floor(vp.width); c.height = Math.floor(vp.height);
+        await page.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
       }
-    }, { rootMargin: "800px 0px" });
-    holders.forEach((d) => io.observe(d));
+    }, { root: thumbs, rootMargin: "0px 600px" });
+    for (const t of thumbs.children) io.observe(t);
+
+    show(current, false);
   } catch (err) {
     console.error(err);
-    showFallback("このブラウザではスライドを埋め込み表示できませんでした。");
+    count.textContent = "";
+    viewer.innerHTML = `<div class="fallback">このブラウザでは表示できませんでした。<a href="${PDF_URL}">deck.pdf を開く</a></div>`;
   }
 </script>
 </body>
